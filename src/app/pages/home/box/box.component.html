@@ -1,7 +1,8 @@
-<ng-container *ngIf="isActive && keyboardControl; else noHandle">
-    <div class="fixed-size-box" [class.active]="isActive" [ngStyle]="{'z-index': z_index}" appMovement
-        [keyboardControl]="keyboardControl"></div>
+<ng-container *ngFor="let box of boxes">
+    <div class="fixed-size-box" *ngIf="keyboardControl && box.selected; else noHandle" (click)="toggleActiveBox(box.id)"
+        [class.active]="box.selected" [ngStyle]="{'z-index': box.z_index}" appMovement [attr.id]="box.id"></div>
+    <ng-template #noHandle>
+        <div class="fixed-size-box" (click)="toggleActiveBox(box.id)" [class.active]="box.selected"
+            [ngStyle]="{'z-index': box.z_index}" [attr.id]="box.id"></div>
+    </ng-template>
 </ng-container>
-<ng-template #noHandle>
-    <div class="fixed-size-box" [class.active]="isActive" [ngStyle]="{'z-index': z_index}"></div>
-</ng-template>

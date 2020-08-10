@@ -1,5 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { BoxesService } from '../../../services/boxes.service';
 
 @Component({
   selector: 'app-box',
@@ -8,14 +7,40 @@ import { BoxesService } from '../../../services/boxes.service';
 })
 export class BoxComponent implements OnInit {
 
-  @Input('isActive') isActive: boolean;
-  @Input('z_index') z_index: number;
+  @Input('keyboardControl') keyboardControl: boolean;
 
-  keyboardControl: boolean;
+  boxes: Array<Box> = [];
 
-  constructor(private _boxesService: BoxesService) { }
+  constructor() { }
 
-  ngOnInit(): void {
-    this._boxesService.getKeyboardControl().subscribe(val => this.keyboardControl = val);
+  ngOnInit(): void { }
+
+  onAddBox() {
+    const boxCount = this.getBoxCount();
+    const box = new Box();
+    box.id = boxCount + 1;
+    box.z_index = boxCount * 10;
+    box.selected = false;
+    this.boxes.push(box);
   }
+
+  onDeleteBox = (id: number) => {
+    const index = this.getBoxById(id);
+    this.boxes.splice(index);
+  }
+
+  getBoxById = (id: number) => this.boxes.findIndex(obj => obj.id === id);
+
+  getBoxCount = () => this.boxes.length;
+
+  toggleActiveBox = (id: number) => {
+    const index = this.getBoxById(id);
+    this.boxes[index].selected = !this.boxes[index].selected;
+  }
+}
+
+class Box {
+  id: number;
+  z_index: number;
+  selected: boolean;
 }

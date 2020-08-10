@@ -12,13 +12,8 @@
             <span class="mb-spacer"></span>
             <button mat-raised-button color="accent" class="mb-button" (click)="onAddBox()">Add a new box</button>
         </mat-card-header>
-        <mat-card-content class="mb-card-content" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="2%"
-            fxLayoutAlign="center" fxFlex="100%">
-            <app-box *ngFor="let box of boxes" (click)="toggleActiveBox(box.id)" [isActive]="box.selected"
-                [z_index]="box.z_index">
-            </app-box>
+        <mat-card-content class="mb-card-content">
+            <app-box [keyboardControl]="keyboardControl"></app-box>
         </mat-card-content>
     </mat-card>
 </div>
-
-<!-- <app-footer></app-footer> -->

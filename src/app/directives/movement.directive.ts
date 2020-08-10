@@ -1,5 +1,6 @@
-import { Directive, ElementRef, Renderer2, HostListener, HostBinding, Input } from '@angular/core';
+import { Directive, ElementRef, Renderer2, HostListener, Input, ViewChild, Inject, forwardRef } from '@angular/core';
 import { AppConstants } from '../app.constants';
+import { BoxComponent } from '../pages/home/box/box.component';
 
 @Directive({
   selector: '[appMovement]'
@@ -7,10 +8,9 @@ import { AppConstants } from '../app.constants';
 export class MovementDirective {
 
   @Input('keyboardControl') keyboardControl: boolean = false;
-  @HostBinding('style.left') left: string;
-  @HostBinding('style.top') top: string;
 
-  constructor(private _appConstants: AppConstants, private el: ElementRef, private renderer: Renderer2) { }
+  constructor(private _appConstants: AppConstants, private el: ElementRef, private renderer: Renderer2,
+    @Inject(forwardRef(() => BoxComponent)) public boxComp: BoxComponent) { }
 
   @HostListener('window:keyup', ['$event'])
   keyEvent(event: KeyboardEvent) {
@@ -44,10 +44,7 @@ export class MovementDirective {
     this.renderer.setStyle(this.el.nativeElement, 'top', `${top + this._appConstants.surplusPixel}px`);
   }
 
-  delete() {
-    this.renderer.destroy();
-    
-  }
+  delete = () => this.boxComp.onDeleteBox(parseInt(this.el.nativeElement.id));
 
   getElementStyles() {
     return {
