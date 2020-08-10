@@ -1,0 +1,7 @@
+<ng-container *ngIf="isActive && keyboardControl; else noHandle">
+    <div class="fixed-size-box" [class.active]="isActive" [ngStyle]="{'z-index': z_index}" appMovement
+        [keyboardControl]="keyboardControl"></div>
+</ng-container>
+<ng-template #noHandle>
+    <div class="fixed-size-box" [class.active]="isActive" [ngStyle]="{'z-index': z_index}"></div>
+</ng-template>

@@ -1,0 +1,24 @@
+<app-header></app-header>
+
+<div class="page-wrap">
+    <mat-card class="md-card">
+        <mat-card-header class="mb-card-header">
+            <section class="mb-section">
+                <mat-slide-toggle class="mb-margin" [color]="color" [checked]="false"
+                    (change)="toggleControl($event.checked)">
+                    Keyboard control
+                </mat-slide-toggle>
+            </section>
+            <span class="mb-spacer"></span>
+            <button mat-raised-button color="accent" class="mb-button" (click)="onAddBox()">Add a new box</button>
+        </mat-card-header>
+        <mat-card-content class="mb-card-content" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="2%"
+            fxLayoutAlign="center" fxFlex="100%">
+            <app-box *ngFor="let box of boxes" (click)="toggleActiveBox(box.id)" [isActive]="box.selected"
+                [z_index]="box.z_index">
+            </app-box>
+        </mat-card-content>
+    </mat-card>
+</div>
+
+<!-- <app-footer></app-footer> -->
